@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(./mvnw *)",
+      "Bash(openspec *)",
+      "Bash(git status)",
+      "Bash(git status *)",
+      "Bash(git diff)",
+      "Bash(git diff *)",
+      "Bash(git log *)",
+      "Bash(git add *)",
+      "Bash(git commit -m *)"
+    ],
+    "deny": [
+      "Bash(git push)",
+      "Bash(git push *)",
+      "Bash(git commit --amend *)",
+      "Bash(git reset --hard *)",
+      "Bash(git rebase *)",
+      "Bash(git clean *)",
+      "Bash(git tag *)",
+      "Bash(*-D*skip*)",
+      "Bash(*-Dmaven.test.failure.ignore*)",
+      "Read(/.env)",
+      "Edit(/.env)",
+      "Edit(/AGENTS.md)",
+      "Edit(/CLAUDE.md)",
+      "Edit(/openspec/config.yaml)",
+      "Edit(/docs/gates/**)",
+      "Edit(/spotbugs-exclude.xml)",
+      "Edit(/.claude/settings.json)",
+      "Edit(/src/test/java/com/roigcode/app/TestcontainersConfiguration.java)",
+      "Edit(/src/test/java/com/roigcode/app/architecture/**)",
+      "Edit(/src/test/java/com/roigcode/app/acceptance/CucumberAcceptanceTest.java)",
+      "Edit(/src/test/java/com/roigcode/app/acceptance/CucumberSpringConfiguration.java)",
+      "Edit(/src/test/java/com/roigcode/app/testsupport/**)"
+    ]
+  }
+}
