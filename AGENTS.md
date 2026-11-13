@@ -26,7 +26,9 @@ system behavior; the code must conform to them.
 - Start the local database: `docker compose up -d`
 - Run the application locally: `./mvnw spring-boot:run -Dspring-boot.run.profiles=local`
 
-A task is not done until `./mvnw verify` passes. `verify` enforces:
+A task is not done until `./mvnw verify` passes, run without flags. Never skip or
+relax checks from the command line (`-DskipTests`, `-Djacoco.skip`,
+`-Dspotless.check.skip`, `-Dmaven.test.failure.ignore` or similar). `verify` enforces:
 - Code formatting (Spotless, palantir-java-format) and static analysis (SpotBugs).
 - 80% line and branch coverage per class (JaCoCo). Report: `target/site/jacoco/index.html`.
 - 80% mutation score on `domain` and `application` (PIT). Report: `target/pit-reports/`.
