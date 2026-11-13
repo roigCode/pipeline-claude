@@ -12,7 +12,17 @@
       "Bash(git add *)",
       "Bash(git commit -m *)"
     ],
+    "ask": [
+      "Edit(/pom.xml)",
+      "Edit(/openspec/specs/**)",
+      "Edit(/src/test/resources/features/**)",
+      "Bash(docker *)",
+      "WebFetch",
+      "WebSearch"
+    ],
     "deny": [
+      "Bash(mvn)",
+      "Bash(mvn *)",
       "Bash(git push)",
       "Bash(git push *)",
       "Bash(git commit --amend *)",
@@ -29,12 +39,12 @@
       "Edit(/openspec/config.yaml)",
       "Edit(/docs/gates/**)",
       "Edit(/spotbugs-exclude.xml)",
-      "Edit(/.claude/settings.json)",
       "Edit(/src/test/java/com/roigcode/app/TestcontainersConfiguration.java)",
       "Edit(/src/test/java/com/roigcode/app/architecture/**)",
       "Edit(/src/test/java/com/roigcode/app/acceptance/CucumberAcceptanceTest.java)",
       "Edit(/src/test/java/com/roigcode/app/acceptance/CucumberSpringConfiguration.java)",
-      "Edit(/src/test/java/com/roigcode/app/testsupport/**)"
+      "Edit(/src/test/java/com/roigcode/app/testsupport/**)",
+      "Edit(/.claude/**)"
     ]
   }
 }
