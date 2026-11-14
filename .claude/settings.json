@@ -21,6 +21,7 @@
       "WebSearch"
     ],
     "deny": [
+      "mcp__*",
       "Bash(mvn)",
       "Bash(mvn *)",
       "Bash(git push)",
