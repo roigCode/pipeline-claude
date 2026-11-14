@@ -58,7 +58,10 @@ Current base version: see `git tag` in `pipeline-base`.
 | Antigravity reads `AGENTS.md` natively; never create `GEMINI.md` | `GEMINI.md` would take precedence and break parity |
 | Antigravity CLI (`agy`) instead of Gemini CLI | Gemini CLI stopped serving Google AI Pro/Ultra plans in June 2026 |
 | OpenSpec initialized per repo with only its tool (`--tools claude` / `--tools antigravity`), same `core` profile | No traces of the other agent; same workflows on both sides |
-| Global agent configuration neutralized during experiments (`~/.claude/CLAUDE.md`, `~/.gemini/...`) | Personal preferences would contaminate the comparison |
+| Claude experiments run with a clean configuration profile: alias `claude-pipeline-exp` = `CLAUDE_CONFIG_DIR="$HOME/.claude-pipeline-exp" claude` | The global `CLAUDE.md`, skills, plugins and settings in `~/.claude/` are not loaded, and the everyday configuration stays untouched. Rejected: moving global files (claude.ai and plugin skills are regenerated on start) and per-project `enabledPlugins`/`skillOverrides` (unreliable; skill descriptions still load) |
+| claude.ai account skills still sync into any profile, so the account keeps only default skills | A profile cannot filter account skills; development skills (workflow, TDD, style) would change Claude's behaviour versus Antigravity |
+| Before each Claude experiment, `/context` must show only the project instructions (`CLAUDE.md`, `AGENTS.md`), the OpenSpec skills and the tool's built-in skills | Proves the environment is clean instead of assuming it. Built-in skills are part of the tool, as Antigravity has its own |
+| Antigravity: review `~/.gemini/` (`AGENTS.md`, `GEMINI.md`, `config/rules/`) before each experiment; a clean-profile equivalent is pending | Same goal as the Claude profile |
 | Model, effort and CLI version fixed and recorded per experiment | Otherwise results are not comparable |
 | Comparison = same gates passed, not similar code | LLMs are not deterministic; two runs of the same agent already differ |
 | Artifacts in English | Matches OpenSpec keywords and templates |
@@ -119,12 +122,15 @@ Baseline `verify` time on an empty project: about 19 s.
 | The hook does not write global settings | Global permissions would affect every project |
 | Same rule set on both agents | Otherwise one agent works with fewer restrictions |
 | Security files are committed after review and before testing them with the agent | Any change made by the agent during tests shows up in `git diff` |
+| All MCP tools denied in Claude (`mcp__*` in `.claude/settings.json`) | claude.ai connectors (Gmail, Drive, Slack, Calendar, Docs) sync into Claude Code; combined with a prompt injection they could act on personal accounts. Default deny also covers connectors added later. Parity: Antigravity has no MCP servers configured |
+| Opening an MCP is an explicit decision: declare it in `.mcp.json`, replace `mcp__*` with specific denies (deny always wins, so allow exceptions are not possible), allow read tools and ask or deny write tools, configure the Antigravity equivalent, record it here | Same criterion as dependencies: nothing enters without justification |
 
 ## 9. Known limitations
 
 - Permission rules can be bypassed with shell commands (`sed`, `echo >`); unknown commands ask
   in `agy`, but the final guarantee is the human diff review and, later, CI checks.
 - Feature-file freezing cannot be expressed as a permission; it will be checked in CI.
+- The Antigravity permission hook only intercepts the tools listed in `.agents/hooks.json`; MCP tools are not covered (no MCP servers are configured today).
 - PIT reads the Surefire `argLine` (with `@{argLine}` and the Mockito agent); not yet verified
   with real domain code beyond the sabotage test.
 - jqwik maintainers state that the library must not be used by AI agents; kept because it is
@@ -144,6 +150,8 @@ Baseline `verify` time on an empty project: about 19 s.
 - Parallel test execution (tests are already required to be independent).
 - Enforcer `dependencyConvergence`.
 - Optional OpenSpec workflows (`verify`, `ff`...), same profile in both repos.
+- Default deny for MCP tools in Antigravity (find how `agy` names MCP tools; extend the hook or its permissions).
+- Clean configuration profile for Antigravity experiments, equivalent to `claude-pipeline-exp`.
 
 ## 11. Experiments
 
