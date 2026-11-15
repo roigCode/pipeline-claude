@@ -1,4 +1,4 @@
-# 0001 - 0001 - Create a task
+# 0001 - Create a task
 
 Source: https://github.com/roigCode/pipeline-base/issues/1
 
