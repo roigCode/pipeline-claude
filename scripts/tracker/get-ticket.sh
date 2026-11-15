@@ -56,6 +56,9 @@ if [[ $first_line =~ ^\<\!--\ upstream:\ ([A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+)#([0-9
 fi
 
 id=$(printf '%04d' "$source_number")
+# The identifier comes from the tracker. If the title repeats it ("0001 - Title"),
+# drop it so it does not appear twice in the file name and header.
+title=$(printf '%s' "$title" | sed -E "s/^${id}[[:space:]]*[-:][[:space:]]*//")
 slug=$(printf '%s' "$title" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//')
 root=$(git rev-parse --show-toplevel)
 dir="$root/requests"
